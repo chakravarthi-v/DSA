@@ -6,19 +6,20 @@ using namespace std;
 class Solution {
   public:
     // Function to find the number of islands.
-    void solve(int i,int j,vector<vector<char>>& grid,int r,int c)
-   {
-       if(i < 0 or j < 0 or i >= r or j >= c or grid[i][j] != '1')return;
-       grid[i][j] ='2';
-       solve(i+1,j,grid,r,c);
-       solve(i-1,j,grid,r,c);
-       solve(i,j-1,grid,r,c);
-       solve(i,j+1,grid,r,c);
-       solve(i+1,j+1,grid,r,c);
-       solve(i-1,j-1,grid,r,c);
-       solve(i+1,j-1,grid,r,c);
-       solve(i-1,j+1,grid,r,c);
-   }
+    void DFS(vector<vector<char>> &grid,int i,int j,int m,int n){
+        if(i<0||j<0||i>=m||j>=n||grid[i][j]!='1'){
+           return ;  
+        }
+            grid[i][j]='2';
+            DFS(grid,i+1,j,m,n);
+            DFS(grid,i-1,j,m,n);
+            DFS(grid,i,j-1,m,n);
+            DFS(grid,i,j+1,m,n);
+            DFS(grid,i+1,j+1,m,n);
+            DFS(grid,i-1,j-1,m,n);
+            DFS(grid,i+1,j-1,m,n);
+            DFS(grid,i-1,j+1,m,n);
+    }
     int numIslands(vector<vector<char>>& grid) {
         // Code here
         int row=grid.size(),column=grid[0].size();
@@ -30,7 +31,7 @@ class Solution {
             for(int j=0;j<column;j++){
                 if(grid[i][j]=='1'){
                     count++;
-                    solve(i,j,grid,row,column);
+                    DFS(grid,i,j,row,column);
                     
                 }
             }
