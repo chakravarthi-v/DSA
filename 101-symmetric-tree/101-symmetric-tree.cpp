@@ -11,21 +11,25 @@
  */
 class Solution {
 public:
-    bool symmetricUtil(TreeNode* root1,TreeNode* root2){
-        if(root1==NULL||root2==NULL){
-            if(root1==root2)return true;
-            else return false;
-        }
-        
-        if(root1->val!=root2->val){
-            return false;
-        }
-        if(symmetricUtil(root1->right,root2->left)==false)return false;
-        if(symmetricUtil(root1->left,root2->right)==false)return false;
-        return true;
-        
-    }
+    
     bool isSymmetric(TreeNode* root) {
-        return symmetricUtil(root->left,root->right);
+        queue<TreeNode*> q1,q2;
+        q1.push(root->left);
+        q2.push(root->right);
+        while(!q1.empty() && !q2.empty()){
+            auto it=q1.front(),it2=q2.front();
+            q1.pop();
+            q2.pop();
+            if(it==NULL&&it2==NULL)continue;
+            if(it==NULL||it2==NULL)return false;
+            if(it->val!=it2->val)return false;
+            else{
+                q1.push(it->left);
+                q1.push(it->right);
+                q2.push(it2->right);
+                q2.push(it2->left);
+            }
+        }
+        return true;
     }
 };
